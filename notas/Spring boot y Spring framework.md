@@ -8,7 +8,7 @@ Es un marco de trabajo (framework) **open-source** para el desarrollo de aplicac
 4. **Web y REST:** Incluye módulos como Spring MVC para desarrollar aplicaciones web y APIs RESTful.
 5. **Integración:** Facilita la integración con otros sistemas mediante herramientas como JMS, mail, y servicios web SOAP o REST.
 
-### **Spring Boot**
+## **Spring Boot**
 
 Es una extensión del Spring Framework diseñada para simplificar y acelerar el desarrollo de aplicaciones basadas en Spring. Spring Boot elimina la necesidad de configurar manualmente muchos aspectos del framework, proporcionando una configuración automática y listas para usar.
 #### **Características clave de Spring Boot:**
