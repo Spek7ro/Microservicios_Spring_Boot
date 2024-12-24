@@ -13,6 +13,6 @@ Una aplicación correctamente implementada y basada en microservicios puede logr
 - Proporcionar contabilidad de costos detallada.
 - Aumentar la escalabilidad y confiabilidad de la aplicación en general.
 ### Referencias:
-https://learn.microsoft.com/en-us/azure/architecture/microservices/
-https://spring.io/microservices
-https://cloud.google.com/appengine/docs/legacy/standard/python/microservices-on-app-engine?hl=es-419
+- https://learn.microsoft.com/en-us/azure/architecture/microservices/
+- https://spring.io/microservices
+- https://cloud.google.com/appengine/docs/legacy/standard/python/microservices-on-app-engine?hl=es-419
