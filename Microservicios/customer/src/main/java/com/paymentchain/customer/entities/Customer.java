@@ -9,8 +9,9 @@ import lombok.Data;
 @Data
 @Entity
 public class Customer {
-    @Id
+
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
     private long id;
     private String name;
     private String number;
