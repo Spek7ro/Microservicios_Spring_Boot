@@ -34,12 +34,12 @@ public class CustomerRestController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> put(@PathVariable long id, @RequestBody Customer input) {
-        Optional<Customer> optionalcustomer = customerRepository.findById(id);
-        if (optionalcustomer.isPresent()) {
-            Customer newcustomer = optionalcustomer.get();
-            newcustomer.setName(input.getName());
-            newcustomer.setPhone(input.getPhone());
-            Customer save = customerRepository.save(newcustomer);
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+        if (optionalCustomer.isPresent()) {
+            Customer newCustomer = optionalCustomer.get();
+            newCustomer.setName(input.getName());
+            newCustomer.setPhone(input.getPhone());
+            Customer save = customerRepository.save(newCustomer);
             return new ResponseEntity<>(save, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
