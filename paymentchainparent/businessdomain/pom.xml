@@ -13,7 +13,9 @@
 
     <name>businessdomain</name>
     <url>http://maven.apache.org</url>
-
+    <modules>
+        <module>customer</module>
+    </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
