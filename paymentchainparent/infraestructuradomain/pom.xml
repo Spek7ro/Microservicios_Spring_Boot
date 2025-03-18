@@ -9,7 +9,7 @@
 
     <groupId>com.paymentchain.infraestructuradomain</groupId>
     <artifactId>infraestructuradomain</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>infraestructuradomain</name>
     <url>http://maven.apache.org</url>

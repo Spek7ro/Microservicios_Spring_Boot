@@ -9,7 +9,7 @@
 
     <groupId>com.paymentchain.businessdomain</groupId>
     <artifactId>businessdomain</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <name>businessdomain</name>
     <url>http://maven.apache.org</url>
