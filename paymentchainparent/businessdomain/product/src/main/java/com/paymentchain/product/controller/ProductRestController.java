@@ -14,34 +14,39 @@ import java.util.Optional;
 public class ProductRestController {
 
     @Autowired
-    private ProductRepository productRepsitory;
+    ProductRepository productRepository;
 
     @GetMapping()
-    public List<Product> getAllProducts() {
-        return productRepsitory.findAll();
+    public List<Product> list() {
+        return productRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public Product getProductById(@PathVariable Long id) {
-        return productRepsitory.findById(id).get();
+    public Product get(@PathVariable(name = "id") long id) {
+        return productRepository.findById(id).get();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody Product input) {
-       Product product = productRepsitory.save(input);
-       return ResponseEntity.ok(product);
+    public ResponseEntity<?> put(@PathVariable(name = "id") long id, @RequestBody Product input) {
+        Product find = productRepository.findById(id).get();
+        if(find != null){
+            find.setCode(input.getCode());
+            find.setName(input.getName());
+        }
+        Product save = productRepository.save(find);
+        return ResponseEntity.ok(save);
     }
 
-    @PostMapping()
-    public ResponseEntity<?> createProduct(@RequestBody Product input) {
-        Product product = productRepsitory.save(input);
-        return ResponseEntity.ok(product);
+    @PostMapping
+    public ResponseEntity<?> post(@RequestBody Product input) {
+        Product save = productRepository.save(input);
+        return ResponseEntity.ok(save);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
-        Optional<Product> product = productRepsitory.findById(id);
-        product.ifPresent(value -> productRepsitory.delete(value));
+    public ResponseEntity<?> delete(@PathVariable(name = "id") long id) {
+        Optional<Product> findById = productRepository.findById(id);
+        findById.ifPresent(product -> productRepository.delete(product));
         return ResponseEntity.ok().build();
     }
 }
