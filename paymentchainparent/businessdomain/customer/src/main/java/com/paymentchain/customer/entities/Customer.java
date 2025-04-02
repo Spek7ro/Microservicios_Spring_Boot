@@ -12,6 +12,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+    private String code;
     private String name;
     private String phone;
     // iban: número de cuenta bancaria

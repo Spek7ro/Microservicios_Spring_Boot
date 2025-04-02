@@ -37,7 +37,11 @@ public class CustomerRestController {
         Optional<Customer> optionalCustomer = customerRepository.findById(id);
         if (optionalCustomer.isPresent()) {
             Customer newCustomer = optionalCustomer.get();
+            newCustomer.setCode(input.getCode());
+            newCustomer.setIban(input.getIban());
             newCustomer.setName(input.getName());
+            newCustomer.setSurname(input.getSurname());
+            newCustomer.setAddress(input.getAddress());
             newCustomer.setPhone(input.getPhone());
             Customer save = customerRepository.save(newCustomer);
             return new ResponseEntity<>(save, HttpStatus.OK);
