@@ -2,6 +2,7 @@ package com.paymentchain.customer.controller;
 
 import com.paymentchain.customer.entities.Customer;
 import com.paymentchain.customer.repository.CustomerRepository;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,15 @@ public class CustomerRestController {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Operation(summary = "Lista de clientes")
     @GetMapping()
     public List<Customer> findAll() {
         return customerRepository.findAll();
     }
 
+    @Operation(summary = "Obtener un cliente por ID")
     @GetMapping("/{id}")
-    public ResponseEntity<?> get(@PathVariable long id) {
+    public ResponseEntity<?> get(@PathVariable(name = "id") long id) {
         Optional<Customer> customer = customerRepository.findById(id);
         if (customer.isPresent()) {
             return new ResponseEntity<>(customer.get(), HttpStatus.OK);
@@ -32,8 +35,9 @@ public class CustomerRestController {
         }
     }
 
+    @Operation(summary = "Actualizar un cliente")
     @PutMapping("/{id}")
-    public ResponseEntity<?> put(@PathVariable long id, @RequestBody Customer input) {
+    public ResponseEntity<?> put(@PathVariable(name = "id") long id, @RequestBody Customer input) {
         Optional<Customer> optionalCustomer = customerRepository.findById(id);
         if (optionalCustomer.isPresent()) {
             Customer newCustomer = optionalCustomer.get();
@@ -50,14 +54,17 @@ public class CustomerRestController {
         }
     }
 
+    @Operation(summary = "Crear un cliente")
     @PostMapping
     public ResponseEntity<?> post(@RequestBody Customer input) {
+        input.getProducts().forEach(product -> product.setCustomer(input));
         Customer save = customerRepository.save(input);
         return ResponseEntity.ok(save);
     }
 
+    @Operation(summary = "Eliminar un cliente por ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable long id) {
+    public ResponseEntity<?> delete(@PathVariable(name = "id") long id) {
         Optional<Customer> customer = customerRepository.findById(id);
         if (customer.isPresent()) {
             customerRepository.delete(customer.get());
