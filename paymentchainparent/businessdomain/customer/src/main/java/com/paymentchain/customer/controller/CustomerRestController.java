@@ -112,8 +112,16 @@ public class CustomerRestController {
         }
     }
 
+
+    @GetMapping("/full")
+    private Customer getByCode(@RequestParam(name = "code") String code) {
+        Customer customer = customerRepository.findByCode(code);
+
+    }
+
+
     // Obtener el nombre de un producto: hace una petición HTTP GET al microservicio de productos
-    public String getProductName(long id) {
+    private String getProductName(long id) {
         WebClient build = webClientBuilder
                 .clientConnector(new ReactorClientHttpConnector(client))
                 .baseUrl("http://localhost:8083/product")
