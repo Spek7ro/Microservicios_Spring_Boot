@@ -112,8 +112,10 @@ public class CustomerRestController {
         }
     }
 
+    // Obtener el nombre de un producto: hace una petición HTTP GET al microservicio de productos
     public String getProductName(long id) {
-        WebClient build = webClientBuilder.clientConnector(new ReactorClientHttpConnector(client))
+        WebClient build = webClientBuilder
+                .clientConnector(new ReactorClientHttpConnector(client))
                 .baseUrl("http://localhost:8083/product")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .defaultUriVariables(Collections.singletonMap("url", "http://localhost:8083/product"))
