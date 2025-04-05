@@ -2,6 +2,7 @@ package com.paymentchain.customer.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.paymentchain.customer.entities.Customer;
+import com.paymentchain.customer.entities.CustomerProduct;
 import com.paymentchain.customer.repository.CustomerRepository;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.epoll.EpollChannelOption;
@@ -112,13 +113,16 @@ public class CustomerRestController {
         }
     }
 
-
     @GetMapping("/full")
-    private Customer getByCode(@RequestParam(name = "code") String code) {
+    public Customer getByCode(@RequestParam(name = "code") String code) {
         Customer customer = customerRepository.findByCode(code);
-
+        List<CustomerProduct> products = customer.getProducts();
+        products.forEach(product -> {
+            String productName = getProductName(product.getId());
+            product.setProductName(productName);
+        });
+        return customer;
     }
-
 
     // Obtener el nombre de un producto: hace una petición HTTP GET al microservicio de productos
     private String getProductName(long id) {
