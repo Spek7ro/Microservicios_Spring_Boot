@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-public class Transactions {
+public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
