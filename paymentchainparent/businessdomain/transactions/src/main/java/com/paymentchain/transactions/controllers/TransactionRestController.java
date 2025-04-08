@@ -45,10 +45,20 @@ public class TransactionRestController {
     @Operation(summary = "Actualizar una transacción")
     @PutMapping("/{id}")
     public ResponseEntity<Transaction> put(@PathVariable (name = "id") long id, @RequestBody @Valid Transaction tx) {
-        return transactionRepository.findById(id).map(existing -> {
-            tx.setId(id); // Asegurar que se actualiza el registro correcto
-            return ResponseEntity.ok(transactionRepository.save(tx));
-        }).orElse(ResponseEntity.notFound().build());
+       Transaction transactionFind = transactionRepository.findById(id).get();
+       if (transactionFind != null) {
+           transactionFind.setAmount(tx.getAmount());
+           transactionFind.setChannel(tx.getChannel());
+           transactionFind.setDate(tx.getDate());
+           transactionFind.setDescription(tx.getDescription());
+           transactionFind.setFee(tx.getFee());
+           transactionFind.setAccountIban(tx.getAccountIban());
+           transactionFind.setReference(tx.getReference());
+           transactionFind.setStatus(tx.getStatus());
+           return new ResponseEntity<>(transactionRepository.save(transactionFind), HttpStatus.OK);
+       } else {
+           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+       }
     }
 
     @Operation(summary = "Eliminar una transacción por ID")
