@@ -25,12 +25,6 @@ public class TransactionRestController {
         return transactionRepository.findAll();
     }
 
-    @Operation(summary = "Crear una transacción")
-    @PostMapping
-    public ResponseEntity<Transaction> post(@RequestBody @Valid Transaction tx) {
-        return ResponseEntity.ok(transactionRepository.save(tx));
-    }
-
     @Operation(summary = "Obtener una transacción por ID")
     @GetMapping("/{id}")
     public ResponseEntity<Transaction> getById(@PathVariable (name = "id") long id) {
@@ -40,6 +34,18 @@ public class TransactionRestController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @Operation(summary = "Obtener las transacciones de un cliente")
+    @GetMapping("/customer/transactions/")
+    public List<Transaction> getByCustomer(@RequestParam String ibanAccount) {
+        return transactionRepository.findByIbanAccount(ibanAccount);
+    }
+
+    @Operation(summary = "Crear una transacción")
+    @PostMapping
+    public ResponseEntity<Transaction> post(@RequestBody @Valid Transaction tx) {
+        return ResponseEntity.ok(transactionRepository.save(tx));
     }
 
     @Operation(summary = "Actualizar una transacción")
@@ -52,7 +58,7 @@ public class TransactionRestController {
            transactionFind.setDate(tx.getDate());
            transactionFind.setDescription(tx.getDescription());
            transactionFind.setFee(tx.getFee());
-           transactionFind.setAccountIban(tx.getAccountIban());
+           transactionFind.setIbanAccount(tx.getIbanAccount());
            transactionFind.setReference(tx.getReference());
            transactionFind.setStatus(tx.getStatus());
            return new ResponseEntity<>(transactionRepository.save(transactionFind), HttpStatus.OK);
