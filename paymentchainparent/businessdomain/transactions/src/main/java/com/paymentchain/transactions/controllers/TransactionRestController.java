@@ -29,16 +29,12 @@ public class TransactionRestController {
     @GetMapping("/{id}")
     public ResponseEntity<Transaction> getById(@PathVariable (name = "id") long id) {
         Optional<Transaction> transaction = transactionRepository.findById(id);
-        if (transaction.isPresent()) {
-            return new ResponseEntity<>(transaction.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return transaction.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @Operation(summary = "Obtener las transacciones de un cliente")
     @GetMapping("/customer/transactions/")
-    public List<Transaction> getByCustomer(@RequestParam String ibanAccount) {
+    public List<Transaction> getByCustomer(@RequestParam(name = "ibanAccount") String ibanAccount) {
         return transactionRepository.findByIbanAccount(ibanAccount);
     }
 
@@ -51,20 +47,20 @@ public class TransactionRestController {
     @Operation(summary = "Actualizar una transacción")
     @PutMapping("/{id}")
     public ResponseEntity<Transaction> put(@PathVariable (name = "id") long id, @RequestBody @Valid Transaction tx) {
-       Transaction transactionFind = transactionRepository.findById(id).get();
-       if (transactionFind != null) {
-           transactionFind.setAmount(tx.getAmount());
-           transactionFind.setChannel(tx.getChannel());
-           transactionFind.setDate(tx.getDate());
-           transactionFind.setDescription(tx.getDescription());
-           transactionFind.setFee(tx.getFee());
-           transactionFind.setIbanAccount(tx.getIbanAccount());
-           transactionFind.setReference(tx.getReference());
-           transactionFind.setStatus(tx.getStatus());
-           return new ResponseEntity<>(transactionRepository.save(transactionFind), HttpStatus.OK);
-       } else {
-           return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-       }
+        Transaction transactionFind = transactionRepository.findById(id).get();
+        if (transactionFind != null) {
+            transactionFind.setAmount(tx.getAmount());
+            transactionFind.setChannel(tx.getChannel());
+            transactionFind.setDate(tx.getDate());
+            transactionFind.setDescription(tx.getDescription());
+            transactionFind.setFee(tx.getFee());
+            transactionFind.setIbanAccount(tx.getIbanAccount());
+            transactionFind.setReference(tx.getReference());
+            transactionFind.setStatus(tx.getStatus());
+            return new ResponseEntity<>(transactionRepository.save(transactionFind), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Operation(summary = "Eliminar una transacción por ID")
