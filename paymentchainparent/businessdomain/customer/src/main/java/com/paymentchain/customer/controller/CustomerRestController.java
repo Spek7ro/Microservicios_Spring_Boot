@@ -125,8 +125,7 @@ public class CustomerRestController {
         });
 
         //find all transactions that belong this account number
-        List<?> transactions = getTransactions(customer.getIban());
-        customer.setTransactions(transactions);
+        //customer.setTransactions(getTransactions(customer.getIban()));
 
         return customer;
     }
@@ -173,6 +172,4 @@ public class CustomerRestController {
                 .block());
         return transactionsOptional.orElse(Collections.emptyList());
     }
-
-
 }
